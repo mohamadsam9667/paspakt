@@ -1,46 +1,565 @@
-<!DOCTYPE html>
-<html lang="en" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-</head>
-<body>
-    
-    <div class="countainer">
-        <div class="header-top">
-            <div class="header-right">
-                <img src="./image/logo_side_blue.png" alt="">
-                <ul class="menu-list">
-                    <li class="menu-item">هاست ابری </li>
-                    <li class="menu-item">سرور ابری </li>
-                    <li class="menu-item">سرور اختصاصی</li>
-                    <li class="menu-item">سایر محصولات </li>
-                </ul>
-            </div>
-            <div class="header-left">
-                <p>ثبت نام </p>
-                <p class="header-login">
-                    ورود
-                </p>
-            </div>
-        </div>
-        <div class="header-bottom">
-            <div class="header-bottom-right">
-                <h1 class="title">خرید هاست</h1>
-                <p class="desc">پارس پک اولین ارائه دهنده خدمات هاستینگ ابری در ایران</p>
-                <p class="info">   خرید هاست ابری؛ سادگی‌ میزبانی اشتراکی به همراه قدرت سرور ابری! با خرید هاست، مدیران سایت دیگر دغدغه مدیریت سرور را ندارند و از سرویسی با قدرت نزدیک به سرور ابری بهره می‌برند. میزبانی وب پارس پک در موقعیت‌های ایران و آلمان، بر بستر لینوکس و مجهز به کنترل پنل دایرکت ادمین و سی پنل ارائه می‌شود. شما می‌توانید با بهره‌مندی از هارد nvme
-                     و ssd به همراه گواهی ssl رایگان، لود سریع و امن فایل ها را تجربه کنید. با خرید هاست ابری، همیشه به میزان نیاز و استفاده از منابع، هزینه پرداخت می‌کنید. درنتیجه دیگر دغدغه قیمت‌ هاست را به دلیل پرداخت هزینه‌های غیرمرتبط نخواهید داشت. همچنین، تیم پشتیبانی ۲۴ ساعته پارس‌پک نیز در این مسیر کنار شما خواهند بود</p>
-
-            </div>
-            <div class="header-bottom-left">
-                <img src="./image/cloud-hosting.svg" alt="">
-            </div>
-        </div>
+<script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+    if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+            var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+            var firstSheetName = workbook.SheetNames[0];
+            var worksheet = workbook.Sheets[firstSheetName];
+  
+            // Convert sheet to JSON to filter blank rows
+            var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+            // Filter out blank rows (rows where all cells are empty, null, or undefined)
+            var filteredData = jsonData.filter(row => row.some(filledCell));
+  
+            // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+            var headerRowIndex = filteredData.findIndex((row, index) =>
+              row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+            );
+            // Fallback
+            if (headerRowIndex === -1 || headerRowIndex > 25) {
+              headerRowIndex = 0;
+            }
+  
+            // Convert filtered JSON back to CSV
+            var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+            csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+            return csv;
+        } catch (e) {
+            console.error(e);
+            return "";
+        }
+    }
+    return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+  <html lang="fa" dir="rtl">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>محمدسام رضازاده ، برنامه‌نویس ۱۰۰% خودآموخته</title>
+  <style>
+  /* ============================
+  Reset & Base
+  ============================ */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { 
+  height:100%; 
+  scroll-behavior: smooth;
+  }
+  body {
+  font-family:'Vazir', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #080808 0%, #0d0d0d 60%, #1a1a1a 100%);
+  color: #e6fff6;
+  direction: rtl;
+  transition: background 300ms ease, color 300ms ease;
+  padding: 48px 0;
+  overflow-x: hidden;
+  }
+  
+  /* ============================
+  3D Scene wrapper
+  ============================ */
+  .scene { perspective:1200px; -webkit-perspective:1200px; }
+  
+  /* ============================
+  Container (main card)
+  ============================ */
+  .container {
+  max-width: 1100px;
+  margin: 48px auto;
+  padding: 48px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(30,30,30,0.9), rgba(20,20,20,0.9));
+  box-shadow:0 18px 50px rgba(0,0,0,0.65), 0 6px 18px rgba(0,255,157,0.04) inset;
+  transform-style: preserve-3d;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,157,0.06);
+  animation: floatSlow 5.6s ease-in-out infinite;
+  }
+  .container:hover { 
+  transform: translateZ(12px) rotateX(1deg) rotateY(-1deg);
+  box-shadow:0 30px 70px rgba(0,0,0,0.75), 0 12px 30px rgba(0,255,157,0.06) inset; 
+  }
+  
+  /* ============================
+  Floating animation
+  ============================ */
+  @keyframes floatSlow {
+  0% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-10px) translateZ(8px); }
+  100% { transform: translateY(0) translateZ(0); }
+  }
+  @keyframes floatFaster {
+  0% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-14px) translateZ(12px); }
+  100% { transform: translateY(0) translateZ(0); }
+  }
+  @keyframes neonGlow {
+  0% { text-shadow: 0 0 5px #00ff9d, 0 0 10px #00ff9d, 0 0 15px #00ff9d; }
+  50% { text-shadow: 0 0 10px #00ff9d, 0 0 20px #00ff9d, 0 0 30px #00ff9d; }
+  100% { text-shadow: 0 0 5px #00ff9d, 0 0 10px #00ff9d, 0 0 15px #00ff9d; }
+  }
+  
+  /* ============================
+  Profile block
+  ============================ */
+  .profile {
+  text-align:center;
+  margin-bottom:48px;
+  transform-style: preserve-3d;
+  position: relative;
+  z-index:5;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+  }
+  .profile.visible {
+  opacity: 1;
+  transform: translateY(0);
+  }
+  .profile-card {
+  display:inline-block;
+  padding:24px;
+  border-radius:24px;
+  background: linear-gradient(180deg, rgba(10,10,10,0.5), rgba(18,18,18,0.6));
+  border:1px solid rgba(0,255,157,0.06);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6), 0 6px 16px rgba(0,255,157,0.03) inset;
+  transform-style: preserve-3d;
+  animation: floatFaster 4.2s ease-in-out infinite;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+  perspective:1000px;
+  }
+  
+  /* ============================
+  3D Flip Profile Image
+  ============================ */
+  .profile-flip {
+  width:200px; height:200px;
+  margin:0 auto 16px auto;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.4,0.2,0.2,1);
+  cursor: pointer; /* نشانگر کلیک */
+  }
+  .profile-flip.flipped {
+  transform: rotateY(180deg) scale(1.05);
+  }
+  .profile-flip .front,
+  .profile-flip .back {
+  position: absolute;
+  width: 200px; height: 200px;
+  backface-visibility: hidden;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid rgba(0,255,157,0.14);
+  box-shadow:0 12px 28px rgba(0,0,0,0.6);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .profile-flip .back {
+  transform: rotateY(180deg);
+  border-color: rgba(0,255,157,0.18);
+  }
+  
+  /* ============================
+  Name & Intro
+  ============================ */
+  h1 { 
+  color:#00ff9d; 
+  font-size:36px; 
+  letter-spacing:0.4px; 
+  margin-bottom:12px;
+  transform: translateZ(48px); 
+  text-shadow:0 2px 8px rgba(0,0,0,0.6); 
+  animation: neonGlow 2s infinite; 
+  }
+  .intro { 
+  max-width:900px; 
+  margin:0 auto; 
+  color:#cfeee6; 
+  font-size:18px; 
+  transform: translateZ(20px); 
+  line-height:1.8; 
+  opacity:0.95; 
+  }
+  
+  /* ============================
+  Sections
+  ============================ */
+  .section { 
+  margin-top:36px; 
+  padding:24px; 
+  border-radius:16px; 
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  border:1px solid rgba(255,255,255,0.02); 
+  transform: translateZ(8px); 
+  opacity: 0; 
+  transform: translateY(50px); 
+  transition: opacity 1s ease, transform 1s ease; 
+  }
+  .section.visible { 
+  opacity: 1; 
+  transform: translateY(0); 
+  }
+  .section h2 { 
+  color:#a4ffe0; 
+  font-size:24px; 
+  margin-bottom:16px; 
+  padding-bottom:8px; 
+  border-bottom:1px dashed rgba(0,255,157,0.06); 
+  animation: neonGlow 3s infinite; 
+  }
+  .section p, .section li { 
+  font-size:16px; 
+  color:#dffbf3; 
+  margin-bottom:12px; 
+  line-height:1.7; 
+  }
+  ul { 
+  list-style:none; 
+  padding-right:20px;
+  }
+  ul li::before { 
+  content:"🚀"; 
+  color:#00ff9d; 
+  margin-left:12px; 
+  opacity:0.95; 
+  }
+  .skills-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  gap: 16px; 
+  }
+  .skill-item { 
+  padding: 16px; 
+  background: rgba(0,255,157,0.04); 
+  border-radius: 12px; 
+  border: 1px solid rgba(0,255,157,0.08); 
+  transition: transform 0.3s ease; 
+  }
+  .skill-item:hover { 
+  transform: scale(1.05); 
+  box-shadow: 0 0 20px rgba(0,255,157,0.2); 
+  }
+  .project-item { 
+  margin-bottom: 24px; 
+  padding: 16px; 
+  background: rgba(0,0,0,0.2); 
+  border-radius: 12px; 
+  transition: background 0.3s ease; 
+  }
+  .project-item:hover { 
+  background: rgba(0,255,157,0.1); 
+  }
+  
+  /* ============================
+  Parallax Background
+  ============================ */
+  .parallax-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('image/stars-bg.png') repeat;
+  z-index: -1;
+  transform: translateZ(-1px) scale(1.1);
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+  }
+  
+  /* ============================
+  Theme Toggle
+  ============================ */
+  .theme-toggle {
+  position:fixed; 
+  top:24px; 
+  left:24px; 
+  z-index:60;
+  padding:16px 20px; 
+  border-radius:16px;
+  background: linear-gradient(180deg, #0b0b0b, #161616);
+  color:#00ff9d; 
+  border:1px solid rgba(0,255,157,0.14);
+  cursor:pointer; 
+  font-weight:600; 
+  letter-spacing:0.2px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.6), 0 6px 20px rgba(0,255,157,0.03) inset;
+  transform-style: preserve-3d; 
+  animation: floatFaster 4.6s ease-in-out infinite;
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+  }
+  .theme-toggle:hover { 
+  transform: translateY(-6px) translateZ(28px); 
+  box-shadow:0 26px 60px rgba(0,255,157,0.12); 
+  }
+  
+  /* Light Theme */
+  body.light {
+  background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 60%, #d0d0d0 100%);
+  color: #121212;
+  }
+  body.light .container { 
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(240,240,240,0.9)); 
+  border: 1px solid rgba(0,200,100,0.06); 
+  }
+  body.light h1 { 
+  color: #00c864; 
+  text-shadow: none; 
+  animation: none; 
+  }
+  body.light .section h2 { 
+  color: #00c864; 
+  }
+  body.light ul li::before { 
+  color: #00c864; 
+  }
+  body.light .intro { 
+  color: #333; 
+  }
+  body.light .section p, .section li { 
+  color: #444; 
+  }
+  body.light .theme-toggle { 
+  color: #00c864; 
+  background: linear-gradient(180deg, #fff, #f0f0f0); 
+  border:1px solid rgba(0,200,100,0.14); 
+  }
+  
+  /* ============================
+  Signature
+  ============================ */
+  .signature-section { 
+  text-align:center; 
+  margin-top:48px; 
+  padding-top:24px; 
+  border-top:1px solid rgba(0,255,157,0.06); 
+  opacity: 0; 
+  transform: translateY(50px); 
+  transition: opacity 1s ease, transform 1s ease; 
+  }
+  .signature-section.visible { 
+  opacity: 1; 
+  transform: translateY(0); 
+  }
+  .signature-img { 
+  max-width:280px; 
+  display:inline-block; 
+  border-radius:24px; 
+  transform: translateZ(16px); 
+  transition: transform 220ms ease; 
+  }
+  .signature-img:hover { 
+  transform: translateZ(34px) scale(1.05); 
+  }
+  
+  /* ============================
+  Responsiveness
+  ============================ */
+  @media (max-width:1024px){ 
+  .container{padding:36px;margin:36px 24px;} 
+  .profile-flip{width:180px;height:180px;} 
+  h1{font-size:32px;} 
+  .intro{font-size:16px;} 
+  .signature-img{max-width:240px;} 
+  .theme-toggle{padding:14px 18px;top:18px;left:18px;} 
+  }
+  @media (max-width:768px){ 
+  .container{padding:24px;margin:24px 16px;} 
+  .profile-flip{width:160px;height:160px;} 
+  h1{font-size:28px;} 
+  .intro{font-size:15px;} 
+  .signature-img{max-width:200px;} 
+  .theme-toggle{padding:12px 16px;top:16px;left:16px;} 
+  }
+  @media (max-width:480px){ 
+  .container{padding:16px;border-radius:12px;} 
+  .profile-card{padding:12px;border-radius:12px;} 
+  .profile-flip{width:120px;height:120px;} 
+  h1{font-size:24px;} 
+  }
+  </style>
+  </head>
+  <body>
+  <div class="parallax-bg"></div>
+  <div class="scene">
+  <button class="theme-toggle" aria-pressed="false" id="themeToggle">تم: تیره</button>
+  <main class="container" role="main" aria-labelledby="resumeTitle">
+  
+  <!-- Profile -->
+  <section class="profile" aria-label="پروفایل">
+  <div class="profile-card" role="region" aria-labelledby="nameTitle">
+    <div class="profile-flip" id="profileFlip">
+      <img src="./image/5922644349840115743.jpg" class="front" alt="عکس جلو سام">
+      <img src="./image/5967470549846313144.jpg" class="back" alt="عکس پشت سام">
     </div>
-   
-</body>
-</html>
+    <h1 id="nameTitle">محمدسام رضازاده</h1>
+    <p class="intro">
+
+        من محمدسام رضازاده، متولد آبان ۱۳۸1، با بیش از ۵ سال تجربه در زمینه  توسعه وب،تدوین ویدئو ,برنامه نویسی فول استک 
+         طراحی سایت  فعالیت می‌کنم. در طول این سال‌ها، پروژه‌های متعددی را با موفقیت به انجام رسانده‌ام و
+         توانسته‌ام مهارت‌های فنی و مدیریتی خود را در محیط‌های مختلف تقویت کنم. همواره به دنبال یادگیری مهارت‌های نو و 
+        ارائه راهکارهای خلاقانه برای حل مسائل پیچیده هستم و هدفم ارتقای کیفیت پروژه‌ها و ایجاد تاثیر مثبت در تیم و سازمان است.
+
+    </p>
+
+  </div>
+  </section>
+  
+  <!-- About -->
+  <section class="section" id="about" aria-labelledby="aboutTitle">
+  <h2 id="aboutTitle">درباره من</h2>
+  <p>متولد آبان ۱۳۸1، در دنیای فناوری و خلاقیت رشد کردم. از نوجوانی کنجکاوی و علاقه‌ام به حل مسائل، من را به مسیر برنامه‌نویسی و توسعه وب کشاند. با بیش از ۵ سال تجربه کاری حرفه‌ای، پروژه‌هایم شامل طراحی وب‌سایت‌های خلاقانه، توسعه ابزارهای کاربردی و راه‌حل‌های دیجیتال برای کسب‌وکارها بوده است.</p>
+  <p>علاقه‌مند به یادگیری مداوم و اکتشاف راهکارهای نوآورانه، همیشه سعی می‌کنم پروژه‌هایم نه‌تنها کارآمد، بلکه زیبا و حرفه‌ای باشند. ترکیب خلاقیت، پشتکار و تجربه کاری باعث شده هر چالش جدید برای من فرصتی باشد برای رشد و ارائه بهترین راه‌حل‌ها.</p>
+  </section>
+  
+  <!-- Education -->
+  <section class="section" id="education" aria-labelledby="educationTitle">
+  <h2 id="educationTitle">تحصیلات</h2>
+  
+  <ul>
+    <li>کارشناسی مهندسی نرم‌افزار – دانشگاه دولتی بوئین زهرا، با تمرکز بر توسعه وب و نرم‌افزارهای کاربردی.</li>
+    <li>مدرک برنامه‌نویسی – از جهاد دانشگاهی، با تسلط بر زبان‌های Python، JavaScript و C++.</li>
+    <li>مدرک بین‌المللی وردپرس – توانمندی در طراحی و توسعه سایت‌های حرفه‌ای و تجارت الکترونیک.</li>
+    <li>برنده جوایز کدنویسی و الگوریتم – مدال طلایی استانی و بین استانی، با سابقه پروژه‌های خلاقانه و رقابتی در زمینه الگوریتم و توسعه نرم‌افزار.</li>
+
+  </ul>
+  </section>
+  
+  <!-- Skills -->
+  <section class="section" id="skills" aria-labelledby="skillsTitle">
+  <h2 id="skillsTitle">مهارت‌ها</h2>
+  <div class="skills-grid">
+    <div class="skill-item">
+      <h3>برنامه‌نویسی</h3>
+      <p>Python, JavaScript, HTML/CSS, React, Node.js – ساخت اپ‌های وب و موبایل با سرعت نور!</p>
+    </div>
+    <div class="skill-item">
+      <h3>توسعه و فناوری</h3>
+      <p>مشاوره حقوقی، حسابرسی مالی، قوانین سایبری – ترکیب قانون با کد برای راه‌حل‌های هوشمند.</p>
+    </div>
+    <div class="skill-item">
+      <h3>ابزارها</h3>
+      <p>راه‌حل‌های هوشمند برای وب و نرم‌افزار، اتوماسیون پروژه‌ها، بهینه‌سازی کد و تجربه کاربری عالی.</p>
+    </div>
+    <div class="skill-item">
+      <h3>نرم‌افزارهای تخصصی</h3>
+      <p>Adobe Suite برای طراحی، Excel پیشرفته برای تحلیل داده، و ابزارهای AI مانند TensorFlow.</p>
+    </div>
+  </div>
+  </section>
+  
+  <!-- Experience -->
+  <section class="section" id="experience" aria-labelledby="experienceTitle">
+  <h2 id="experienceTitle">تجربیات حرفه‌ای</h2>
+  <ul>>
+    <li>فعالیت در شرکت همکاران سیستم: مشارکت در توسعه نرم‌افزارهای سازمانی و پیاده‌سازی پروژه‌های بزرگ فناوری اطلاعات.</li> 
+    <li>تجربه کاری در شرکت همراه حساب، امین  و سپیدار: توسعه و بهینه‌سازی سیستم‌های مالی و حسابداری برای کسب‌وکارها.</li>
+    <li>توسعه‌دهنده وب و برنامه‌نویس در شرکت بازی‌سازی: طراحی و پیاده‌سازی بازی‌ها و وب‌اپلیکیشن‌های تعاملی با تمرکز بر تجربه کاربری.</li>
+    <li>فریلنس توسعه وب سایت: طراحی و پیاده‌سازی بیش از ۲۰ پروژه شخصی و مشتری محور با استفاده از HTML, CSS, JavaScript و وردپرس.</li>
+    <li>مشاور توسعه نرم‌افزار: همکاری با تیم‌ها برای بهینه‌سازی پروژه‌ها و ارائه راهکارهای خلاقانه در حوزه وب و اپلیکیشن.</li></ul>
+  </section>
+  
+  <!-- Projects -->
+  <section class="section" id="projects" aria-labelledby="projectsTitle">
+  <h2 id="projectsTitle">پروژه‌ها</h2>
+  <div class="project-item">
+    <h3>اپلیکیشن حقوقی هوشمند</h3>
+    <p>یک پلتفرم مبتنی بر وب که با استفاده از AI، پرونده‌های حقوقی را تحلیل می‌کند و پیشنهادهای قانونی می‌دهد. ساخته شده با React و Python – بیش از ۱۰۰۰ کاربر فعال!</p>
+  </div>
+  <div class="project-item">
+    <h3>ابزار اتوماسیون مالیاتی</h3>
+    <p>نرم‌افزاری که گزارش‌های مالیاتی را خودکار می‌کند، صرفه‌جویی در زمان و کاهش خطاها. ادغام با APIهای بانکی – پروژه‌ای که زندگی حرفه‌ای‌ام را تغییر داد.</p>
+  </div>
+  <div class="project-item">
+    <h3>وبسایت پورتفولیو</h3>
+    <p>همین سایت! با انیمیشن‌های 3D و افکت‌های اسکرول، برای جذب بازدیدکنندگان و نمایش مهارت‌هایم.</p>
+  </div>
+ 
+  </section>
+  
+  <!-- Contact -->
+  <section class="section" id="contact" aria-labelledby="contactTitle">
+  <h2 id="contactTitle">اطلاعات تماس</h2>
+  <p> تلفن:<a style="color: #00ff9d;" href="tel:+989052788750">
+    09052788750
+  </a> </p>
+  <p>تلگرام: <a href="https://t.me/Mohamadsam9667" target="_blank" rel="noopener" style="color:#00ff9d; text-decoration: underline; transition: color 0.3s;">[لینک پروفایل]</a></p>
+  <p>ایمیل: 
+    <a style="color: #00ff9d;" href="mailto:ali2frt.ir@gmail.com">sam.ir@gmail.com</a>
+    </p>
+  <!-- <p>لینکدین: <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" style="color:#00ff9d; text-decoration: underline; transition: color 0.3s;">[لینک]</a></p> -->
+  <p>گیت‌هاب: <a href="https://github.com/mohamadsam9667" target="_blank" rel="noopener" style="color:#00ff9d; text-decoration: underline; transition: color 0.3s;"> 
+
+    mohamadsam
+
+  </a></p>
+  </section>
+  
+  <!-- Signature -->
+  <div class="signature-section" id="signature" aria-label="امضا">
+  <h2>امضا</h2>
+  <a href="https://www.systemgroup.net/" target="_blank" rel="noopener">
+    <img src="./image/ASDA.png" alt="امضا" class="signature-img">
+  </a>
+  </div>
+  
+  </main>
+  </div>
+  
+  <script>
+  // Theme Toggle
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  themeToggle.textContent = document.body.classList.contains('light') ? 'تم: روشن' : 'تم: تیره';
+  });
+  
+  // Scroll Reveal
+  const sections = document.querySelectorAll('.section, .profile, .signature-section');
+  const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+  if (entry.isIntersecting) {
+    entry.target.classList.add('visible');
+  }
+  });
+  }, { threshold: 0.1 });
+  
+  sections.forEach(section => observer.observe(section));
+  
+  // Parallax Effect on Scroll
+  window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelector('.parallax-bg').style.transform = `translateY(${scrollY * 0.5}px)`;
+  });
+  
+  // Smooth Scroll for Internal Links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+  e.preventDefault();
+  const targetId = this.getAttribute('href');
+  const targetElement = document.querySelector(targetId);
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+  });
+  });
+  
+  // Profile Image Flip on Click
+  const profileFlip = document.getElementById('profileFlip');
+  profileFlip.addEventListener('click', () => {
+  profileFlip.classList.toggle('flipped');
+  });
+  </script>
+  </body>
+  </html>
